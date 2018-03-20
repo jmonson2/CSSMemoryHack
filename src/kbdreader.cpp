@@ -17,13 +17,6 @@ kbdReader::kbdReader()
   }
 
 /*
-kbdReader::kbdReader(char* path)
-  {
-    const char* dev = path;
-    struct input_event ev;
-    ssize_t n;
-    static int fd;
-  }
 */
 const char* kbdReader::getdev()
 {
@@ -48,10 +41,6 @@ int kbdReader::getCurrentKey()
       errno = EIO;
       return -1;
     }
-  /*
-  if (ev.type == EV_KEY && ev.value >= 0 && ev.value <=2)
-    printf("%s 0x%04x (%d)\n", evval[ev.value], (int)ev.code, (int)ev.code);
-  */
   return (int)ev.code;
 }
 
