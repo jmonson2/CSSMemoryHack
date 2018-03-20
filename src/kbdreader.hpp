@@ -8,11 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
-//class kbdReader
-//{
-//public:
-// kbdReader();j
-// kbdReader(char*);
+
 static const char *const evval[3] =
   {
     "RELEASED",
@@ -36,4 +32,3 @@ private:
 
   
 };
-//};

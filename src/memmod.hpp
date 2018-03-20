@@ -13,7 +13,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
-//#include <string.h>
 
 class memMod
 {
@@ -22,8 +21,6 @@ public:
   int fog = 0;
   int pid;
   unsigned long clientso;
-  //int getwireframe();
-  //int getfogoverride();
   void* getvalue(unsigned int, int);//Address and PID
   void setwireframe();//Address, PID, new value
   void setfogoverride();//Address, PID, new value
