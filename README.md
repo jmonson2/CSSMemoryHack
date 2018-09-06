@@ -5,8 +5,10 @@ uses the kernel to detect keyboard input. You can find your input device in /dev
 
 Installation:
 
-`cd src`
+`cd CSSMemoryHack/src `
+
 `cmake .`
+
 `make`
 
 Features:
