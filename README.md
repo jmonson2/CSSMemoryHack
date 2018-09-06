@@ -5,9 +5,9 @@ uses the kernel to detect keyboard input. You can find your input device in /dev
 
 Installation:
 
-`cd src
-cmake .
-make`
+`cd src`
+`cmake .`
+`make`
 
 Features:
 
