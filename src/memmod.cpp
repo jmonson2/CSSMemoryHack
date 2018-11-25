@@ -1,102 +1,75 @@
 #include "memmod.hpp"
-//This is for ptrace PEEKDATA.
-void getValue(unsigned int address, int pid)
-{
-  
-}
-//To retrieve local, safer data
 void memMod::setwireframe()
 {
+  struct iovec local[1];
+  struct iovec remote[1];
+  local[0].iov_base = &wireframe;
+  local[0].iov_len = sizeof(int);
+  remote[0].iov_base = (void*)(r_Drawothermodels+clientso);
+  remote[0].iov_len = sizeof(int);
+  process_vm_readv(pid,local,1,remote,1,0);
   if (wireframe == 1)
     {
       wireframe = 2;
-      std::cout << "Wireframe toggled on!\n";
+      std::cout << "Wireframe on\n";
     }
   else if (wireframe == 2)
     {
       wireframe = 1;
-      std::cout << "Wireframe toggled off!\n";
+      std::cout << "Wireframe off\n";
     }
-  ptrace(PTRACE_ATTACH, pid);
-  wait(0);//CRITICAL STEP, else fails to attach and detach properly!
-  ptrace(PTRACE_POKEDATA, pid, r_Drawothermodels + clientso, wireframe);
-  ptrace(PTRACE_DETACH, pid);
+
+  process_vm_writev(pid,local,1,remote,1,0);
+
 }
 
 void memMod::setfogoverride()
 {
+  struct iovec local[1];
+  struct iovec remote[1];
+  local[0].iov_base = &fog;
+  local[0].iov_len = sizeof(int);
+  remote[0].iov_base = (void*)(fog_override+clientso);
+  remote[0].iov_len = sizeof(int);
+  process_vm_readv(pid,local,1,remote,1,0);
   if (fog == 1)
     {
       fog = 0;
-      std::cout << "Fog toggled on!\n";
+      std::cout << "Fog on\n";
     }
   else if (fog == 0)
     {
       fog = 1;
-      std::cout << "Fog toggled off!\n";
+      std::cout << "Fog off\n";
     }
-  ptrace(PTRACE_ATTACH, pid);
-  wait(0);//CRITICAL STEP, else fails to attach and detach properly!
-  ptrace(PTRACE_POKEDATA, pid, fog_override + clientso, fog);
-  ptrace(PTRACE_DETACH, pid);
+  process_vm_writev(pid,local,1,remote,1,0);
+
 }
 
 
- 
-  
-
-
-char* memMod::getOut(std::string s)
+pid_t memMod::getpid()
 {
-  char *clientso = (char*) malloc(sizeof(char)*10);
-  FILE *fp = popen(s.c_str(), "r");
+  char line[10];
+  FILE* cmd = popen("pidof -s hl2_linux", "r");
+  fgets(line, 10, cmd);
+  pid = strtol(line, NULL, 10);
 
-  while (fgets(clientso, 10, fp))
-    puts (clientso);
-  pclose(fp);
-  return clientso;
-
-}
-int memMod::getpid()
-{
-  FILE *fp = popen("pidof hl2_linux", "r");
-  char s_pid[10];
-  char* s_clientso = (char*) malloc(sizeof(char)*10);
-  std::string s_command;
-  //int pid;
-  unsigned short s_pidC = 0;
-  int exit = 0;
-
-  
-  if (popen == NULL)
-    {
-      std::cout << "START CSS!\n";
-      return 1;
-    }
-  while (std::fgets(s_pid, 10, fp))
-    {
-      puts (s_pid);
-    }
-  pclose(fp);
-
-  for (int i = 0; s_pid[i] != NULL; i++)
-    s_pidC++;
-
-  pid = std::atoi(s_pid);
-
-  s_command = "cat /proc//maps | grep 'client.so' -m2 | cut -c 1-8 | head -n1";
-  s_command.insert(10, s_pid, s_pidC-1);
-
-  
-  s_clientso = getOut(s_command);
-  clientso = atoi(s_clientso);
-  std::string a = getOut(s_command);
-  system("clear");
-  clientso = std::stol (a,NULL,16);
-  std::cout << std::hex << clientso << std::endl;
-  std::cout << s_pid << std::endl;
+  pclose(cmd);
+  clientso = memMod::getclient(pid);
   return pid;
 }
+
+u_int64_t memMod::getclient(pid_t pid)
+{
+  u_int64_t base = -1;
+  char line[16];
+  std::string s = "grep client.so -m2 /proc/" + std::to_string(pid) + "/maps | cut -c 1-8 | head -n1";
+  FILE* cmd = popen(s.c_str(), "r");
+  fgets(line,16,cmd);
+  base = strtol(line, NULL, 16);
+  return base;
+}
+
 
   
 

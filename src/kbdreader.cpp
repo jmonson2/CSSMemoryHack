@@ -1,5 +1,5 @@
 #include "kbdreader.hpp"
-#define dev "/dev/input/by-path/pci-0000:00:14.0-usb-0:2.1:1.0-event-kbd"
+#define dev "/dev/input/by-id/usb-SONiX_USB_DEVICE-event-kbd"
 kbdReader::kbdReader()
   {
     
@@ -49,9 +49,9 @@ int kbdReader::Init()
 {
   fd = open(dev/*"/dev/input/by-path/pci-0000:00:14.0-usb-0:2.1:1.0-event-kbd"*/, O_RDONLY);// Need to change to use dev instead of literal
   if (fd == -1)
-      {
-	fprintf(stderr, "Cannot open %s: %s. Change dev var in /dev/input/by-path/ and recompile!\n", dev, strerror (errno));
-      }
+  {
+	  fprintf(stderr, "Cannot open %s: %s. Change dev var in /dev/input/by-id/ and recompile!\n", dev, strerror (errno));
+  }
   return fd;
 }
     
