@@ -1,14 +1,18 @@
-#include "kbdreader.hpp"
-#include "memmod.hpp"
+#include "../Headers/kbdreader.hpp"
+#include "../Headers/memmod.hpp"
 
-int main()
+
+int main(int argc, char** argv)
 {
+  pid_t pid;
   kbdReader k;
   memMod m;
   int key;
   short key_active;
-  m.getpid();
+  pid = m.getpid();
+  m.pbase = m.getpbase();
   k.Init();
+  
   while (1)
   {
     key = k.getCurrentKey();

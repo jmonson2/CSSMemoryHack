@@ -1,4 +1,4 @@
-#include "kbdreader.hpp"
+#include "../Headers/kbdreader.hpp"
 #define dev "/dev/input/by-id/usb-SONiX_USB_DEVICE-event-kbd"
 kbdReader::kbdReader()
   {

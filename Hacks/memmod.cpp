@@ -1,4 +1,4 @@
-#include "memmod.hpp"
+#include "../Headers/memmod.hpp"
 void memMod::setwireframe()
 {
   struct iovec local[1];
@@ -68,6 +68,29 @@ u_int64_t memMod::getclient(pid_t pid)
   fgets(line,16,cmd);
   base = strtol(line, NULL, 16);
   return base;
+}
+u_int64_t memMod::getpbase()
+{
+  u_int64_t base = -1;
+  char line[16];
+  std::string s = "sed -n 8p /proc/"+std::to_string(pid) + "/maps |cut -c 1-8";
+  FILE* cmd = popen(s.c_str(), "r");
+  fgets(line,16,cmd);
+  base = strtol(line, NULL, 16);
+  return base;
+  
+}
+
+u_int8_t memMod::getflags()
+{
+  struct iovec local[1];
+  struct iovec remote[1];
+  local[0].iov_base = &flags;
+  local[0].iov_len = sizeof(u_int16_t);
+  remote[0].iov_base = (void*)(m_fflags+pbase);
+  remote[0].iov_len = sizeof(u_int16_t);
+  process_vm_readv(pid,local,1,remote,1,0);
+  std::cout << flags << std::endl;
 }
 
 
