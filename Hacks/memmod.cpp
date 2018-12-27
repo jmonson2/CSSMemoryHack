@@ -1,5 +1,25 @@
 #include "../Headers/memmod.hpp"
-void memMod::setwireframe()
+void memMod::setwireframe(int newval){
+  struct iovec local[1];
+  struct iovec remote[1];
+  local[0].iov_base = &newval;
+  local[0].iov_len = sizeof(int);
+  remote[0].iov_base = (void*)(r_Drawothermodels+clientso);
+  remote[0].iov_len = sizeof(int);
+
+  process_vm_writev(pid,local,1,remote,1,0);
+}
+void memMod::setfogoverride(int newval){
+  struct iovec local[1];
+  struct iovec remote[1];
+  local[0].iov_base = &newval;
+  local[0].iov_len = sizeof(int);
+  remote[0].iov_base = (void*)(fog_override+clientso);
+  remote[0].iov_len = sizeof(int);
+
+  process_vm_writev(pid,local,1,remote,1,0);
+}
+void memMod::kbsetwireframe()
 {
   struct iovec local[1];
   struct iovec remote[1];
@@ -23,7 +43,7 @@ void memMod::setwireframe()
 
 }
 
-void memMod::setfogoverride()
+void memMod::kbsetfogoverride()
 {
   struct iovec local[1];
   struct iovec remote[1];
@@ -91,6 +111,7 @@ u_int8_t memMod::getflags()
   remote[0].iov_len = sizeof(u_int16_t);
   process_vm_readv(pid,local,1,remote,1,0);
   std::cout << flags << std::endl;
+  return flags;
 }
 
 

@@ -4,13 +4,13 @@ kbdReader::kbdReader()
   {
     
     static const char *const evval[3] =
-      {
-	"RELEASED",
-	"PRESSED",
-	"REPEATED"
+    {
+      "RELEASED",
+	    "PRESSED",
+	    "REPEATED"
       };
     
-    //const char* dev; Having extreme problems with using dev here instead of the define statement
+    
     struct input_event ev;
     ssize_t n;
     int fd;
@@ -47,7 +47,7 @@ int kbdReader::getCurrentKey()
 
 int kbdReader::Init()
 {
-  fd = open(dev/*"/dev/input/by-path/pci-0000:00:14.0-usb-0:2.1:1.0-event-kbd"*/, O_RDONLY);// Need to change to use dev instead of literal
+  fd = open(dev, O_RDONLY);
   if (fd == -1)
   {
 	  fprintf(stderr, "Cannot open %s: %s. Change dev var in /dev/input/by-id/ and recompile!\n", dev, strerror (errno));

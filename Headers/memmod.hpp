@@ -25,8 +25,10 @@ public:
   pid_t pid;
   unsigned long clientso;
   unsigned long pbase;
-  void setwireframe();//Address, PID, new value
-  void setfogoverride();//Address, PID, new value
+  void setwireframe(int);
+  void setfogoverride(int);
+  void kbsetwireframe();//To be used with kbdreader only
+  void kbsetfogoverride();//To be used with kbdreader only
   pid_t getpid();
   u_int64_t getclient(pid_t);
   u_int64_t getpbase();
