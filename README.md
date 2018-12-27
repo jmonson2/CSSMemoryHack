@@ -1,7 +1,6 @@
 # Counter-Strike: Source Memory Hack (Linux)
 
-If you wish to use this yourself, you may need to make sure that your input device is updated in the source files. This program
-uses the kernel to detect keyboard input. You can find your input device in /dev/input/by-id. 
+Simple memory hack for CSS. If you want to use the toggle switches, you will need to find your keyboard in /dev/input/by-id/
 
 Installation:
 
