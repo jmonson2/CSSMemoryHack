@@ -1,10 +1,8 @@
 #include "../Headers/kbdreader.hpp"
 #define dev "/dev/input/by-id/usb-_Varmilo-event-kbd"
-kbdReader::kbdReader()
-  {
+kbdReader::kbdReader(){
     
-    static const char *const evval[3] =
-    {
+    static const char *const evval[3] = {
       "RELEASED",
 	    "PRESSED",
 	    "REPEATED"
@@ -18,26 +16,21 @@ kbdReader::kbdReader()
 
 /*
 */
-const char* kbdReader::getdev()
-{
+const char* kbdReader::getdev(){
   return dev;
 }
 
-int kbdReader::getKeyStatus()
-{
+int kbdReader::getKeyStatus(){
   return ev.value;
 }
-int kbdReader::getCurrentKey()
-{
+int kbdReader::getCurrentKey(){
   kbdReader::n = read(fd, &ev, sizeof ev);
-  if (n == (ssize_t)-1)
-    {
+  if (n == (ssize_t)-1){
       if (errno == EINTR);
       else
 	return -1;
     }
-  else if (n != sizeof ev)
-    {
+  else if (n != sizeof ev){
       errno = EIO;
       return -1;
     }
@@ -45,11 +38,9 @@ int kbdReader::getCurrentKey()
 }
 
 
-int kbdReader::Init()
-{
+int kbdReader::Init(){
   fd = open(dev, O_RDONLY);
-  if (fd == -1)
-  {
+  if (fd == -1){
 	  fprintf(stderr, "Cannot open %s: %s. Change dev var in /dev/input/by-id/ and recompile!\n", dev, strerror (errno));
   }
   return fd;

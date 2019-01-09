@@ -9,14 +9,12 @@
 #include <string.h>
 #include <iostream>
 
-static const char *const evval[3] =
-  {
+static const char *const evval[3] ={
     "RELEASED",
     "PRESSED",
     "REPEATED"
   };
-class kbdReader
-{
+class kbdReader{
 public:
   kbdReader();
   kbdReader(char*);
