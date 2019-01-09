@@ -2,8 +2,8 @@
 
 Simple memory hack for CSS. If you want to use the toggle switches, you will need to find your keyboard in /dev/input/by-id/
 
-You will need to install X11 development libraries.
-sudo dnf groupinstall "X Software Development"
+You will need to install X11 development libraries. You can do this by typing: 
+sudo dnf groupinstall "X Software Development" in fedora.
 
 
 Features:
