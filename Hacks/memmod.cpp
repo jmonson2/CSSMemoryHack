@@ -38,7 +38,6 @@ void memMod::kbsetwireframe(){
     }
 
   process_vm_writev(pid,local,1,remote,1,0);
-  getflags();
 
 }
 
@@ -103,8 +102,17 @@ u_int8_t memMod::getflags(){
   remote[0].iov_base = (void*)flagsloc;
   remote[0].iov_len = sizeof(u_int32_t);
   process_vm_readv(pid,local,1,remote,1,0);
-  std::cout << "m_fFlags = " << flags << std::endl;
+  bhop();
   return flags;
+}
+void memMod::bhop(){
+  
+  if(flags == 257){
+    XTestFakeKeyEvent(dis, modcode, True, 0);
+    XFlush(dis);
+    XTestFakeKeyEvent(dis, modcode, False, 0);
+    XFlush(dis);
+  }
 }
 
 
@@ -116,4 +124,4 @@ u_int8_t memMod::getflags(){
 
   
 
-  
+      

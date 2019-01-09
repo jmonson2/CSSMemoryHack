@@ -16,6 +16,9 @@
 #include <string>
 #include <unistd.h>
 #include <sys/uio.h>
+#include <X11/Xlib.h>
+#include <X11/Intrinsic.h>
+#include <X11/extensions/XTest.h>
 
 class memMod{
 public:
@@ -33,12 +36,15 @@ public:
   u_int64_t getclient(pid_t);
   u_int32_t* getpbase();
   u_int8_t getflags();
+  void bhop();
 private:
   u_int32_t playerbase_offset = 0xb90744;
   u_int32_t clientbase;
   u_int32_t playerbase;
   u_int32_t pbaseloc;
   u_int32_t flagsloc;
+  Display *dis = XOpenDisplay(NULL);
+  KeyCode modcode = XKeysymToKeycode(dis, XStringToKeysym("l"));
 
 };
  

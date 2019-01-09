@@ -21,6 +21,9 @@ int main(int argc, char** argv){
     if (key == 65 && k.getKeyStatus() == 1){ // 65=F7
 	    m.kbsetfogoverride();
 	  }
+    if (key == 57){ //57=SPACE
+      m.getflags();
+    }
   }
   return 0;
   
