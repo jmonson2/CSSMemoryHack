@@ -1,5 +1,5 @@
 #include "../Headers/kbdreader.hpp"
-#define dev "/dev/input/by-id/usb-SONiX_USB_DEVICE-event-kbd"
+#define dev "/dev/input/by-id/usb-_Varmilo-event-kbd"
 kbdReader::kbdReader()
   {
     

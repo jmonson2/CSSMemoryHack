@@ -11,10 +11,10 @@ int main(int argc, char** argv)
   int key;
   short key_active;
   pid = m.getpid();
-  m.pbase = m.getpbase();
+  m.getpbase();
   k.Init();
-  in.select(m);
-  /*while (1)
+  //in.select(m);
+  while (1)
   {
     key = k.getCurrentKey();
     if (key == 64 && k.getKeyStatus() == 1) // 64=F6
@@ -26,7 +26,6 @@ int main(int argc, char** argv)
 	    m.kbsetfogoverride();
 	  }
   }
-     */ 
   return 0;
   
 }

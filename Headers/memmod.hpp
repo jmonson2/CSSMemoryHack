@@ -3,7 +3,8 @@
 //OFFSETS
 #define r_Drawothermodels 0xBC8870
 #define fog_override 0xBF6850
-#define m_fflags 0x2182411C
+//#define playerbase 0xb90744 //Offset from client.so
+#define m_fflags 0x340 //Offset from playerbase
 #define m_iHealth 0x218240f8
 
 #include <fcntl.h>
@@ -16,8 +17,7 @@
 #include <unistd.h>
 #include <sys/uio.h>
 
-class memMod
-{
+class memMod{
 public:
   u_int16_t flags;
   int wireframe = 1;
@@ -31,9 +31,14 @@ public:
   void kbsetfogoverride();//To be used with kbdreader only
   pid_t getpid();
   u_int64_t getclient(pid_t);
-  u_int64_t getpbase();
+  u_int32_t* getpbase();
   u_int8_t getflags();
-  
+private:
+  u_int32_t playerbase_offset = 0xb90744;
+  u_int32_t clientbase;
+  u_int32_t playerbase;
+  u_int32_t pbaseloc;
+  u_int32_t flagsloc;
 
 };
  
